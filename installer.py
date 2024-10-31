@@ -19,7 +19,7 @@ def get_github_mods():
 
 def install_mod(mod_name, url, mods_folder, page, status_text):
     try:
-        status_text.value = f"Устанавливаем {mod_name.split(".")[0]}"
+        status_text.value = f"Устанавливаем {mod_name.replace(".zip", "")}"
         page.update()
         response = requests.get(url)
         if response.status_code == 200:
@@ -30,7 +30,7 @@ def install_mod(mod_name, url, mods_folder, page, status_text):
         else:
             status_text.value = f"Не удалось загрузить мод {mod_name}."
     except FileExistsError as fee:
-        status_text.value = f"Мод {mod_name.split(".")[0]} уже установлен"
+        status_text.value = f"Мод {mod_name.replace(".zip", "")} уже установлен"
 
 
 def check_and_install_mods(mods_folder, progress, status_text, page):
@@ -39,13 +39,14 @@ def check_and_install_mods(mods_folder, progress, status_text, page):
     results = []
 
     for mod_name, url in mods_to_install.items():
-        if mod_name.split(".")[0] not in installed_mods:
+        if mod_name.replace(".zip", "") not in installed_mods:
+            print(mod_name.replace(".zip", ""))
             results.append(install_mod(mod_name, url, mods_folder, page, status_text))
-            status_text.value = f"Мод {mod_name.split(".")[0]} установлен"
+            status_text.value = f"Мод {mod_name.replace(".zip", "")} установлен"
             progress.value = progress.value + (1 / len(mods_to_install.keys()))
             page.update()
         else:
-            status_text.value = f"Мод {mod_name.split(".")[0]} уже установлен"
+            status_text.value = f"Мод {mod_name.replace(".zip", "")} уже установлен"
             page.update()
                 
     status_text.value = f"Установка успешно завершена!"

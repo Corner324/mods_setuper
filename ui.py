@@ -4,7 +4,7 @@ from installer import check_and_install_mods
 import os
 
 # Путь по умолчанию к папке модов
-MODS_FOLDER = os.path.join(os.environ['USERPROFILE'], "Zomboid", "mods1")
+MODS_FOLDER = os.path.join(os.environ['USERPROFILE'], "Zomboid", "mods")
 
 def main(page: ft.Page):
     page.title = "Zomboid Mod Installer by Corner"
